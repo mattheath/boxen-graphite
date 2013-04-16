@@ -14,6 +14,7 @@ This will add carbon, whisper, and graphite-web.  If you prefer, each is configu
 ## Required Puppet Modules
 
 * `boxen`
+* `puppet-python`
 
 ## Development
 

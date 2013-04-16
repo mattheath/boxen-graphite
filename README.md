@@ -6,8 +6,10 @@ Puppet module for setting up Graphite, because it's no walk in the park manually
 ## Usage
 
 ```puppet
-include graphite::carbon
+include graphite
 ```
+
+This will add carbon, whisper, and graphite-web.  If you prefer, each is configured as a puppet class.
 
 ## Required Puppet Modules
 

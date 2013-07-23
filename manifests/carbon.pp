@@ -9,7 +9,7 @@ class graphite::carbon {
   }
 
   exec { 'install carbon':
-    command   => "cd ${graphite::config::builddir}/carbon && python setup.py install --prefix=${graphite::config::basedir} --install-lib=${graphite::config::libdir}",
+    command   => "cd ${graphite::config::builddir}/carbon && python setup.py install --prefix=${graphite::config::basedir} --install-lib=${graphite::config::libdir} --install-scripts=${graphite::config::bindir}",
     creates   => "${graphite::config::bindir}/carbon-cache.py",
     require   => [
       Repository["${boxen::config::cachedir}/carbon"],

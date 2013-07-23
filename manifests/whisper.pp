@@ -8,7 +8,7 @@ class graphite::whisper {
   }
 
   exec { 'install whisper':
-    command => "cd ${graphite::config::builddir}/whisper && python setup.py install --prefix=${graphite::config::basedir} --install-lib=${graphite::config::libdir}",
+    command => "cd ${graphite::config::builddir}/whisper && python setup.py install --prefix=${graphite::config::basedir} --install-lib=${graphite::config::libdir} --install-scripts=${graphite::config::bindir}",
     creates => "${graphite::config::bindir}/whisper-info.py",
     require => [
       Repository["${boxen::config::cachedir}/whisper"],

@@ -16,4 +16,10 @@ class graphite::whisper {
       File[$graphite::config::libdir],
     ],
   }
+
+  file { "${graphite::config::bindir}/whisper.py":
+    target  => "${graphite::config::libdir}/whisper.py",
+    ensure  => link,
+    require => Exec['install whisper'],
+  }
 }

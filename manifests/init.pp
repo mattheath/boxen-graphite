@@ -21,4 +21,9 @@ class graphite {
     require => File[$boxen::config::configdir],
   }
 
+  # Set up graphite env vars and paths
+  file { "${boxen::config::envdir}/graphite.sh":
+    content => template('graphite/env.sh.erb')
+  }
+
 }

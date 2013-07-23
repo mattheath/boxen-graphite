@@ -17,6 +17,7 @@ class graphite::whisper {
     ],
   }
 
+  # Link the whisper library to the same directory as the scripts
   file { "${graphite::config::bindir}/whisper.py":
     target  => "${graphite::config::libdir}/whisper.py",
     ensure  => link,

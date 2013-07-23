@@ -10,8 +10,12 @@ class graphite::carbon {
 
   exec { 'install carbon':
     command   => "cd ${graphite::config::builddir}/carbon && python setup.py install --prefix=${graphite::config::basedir} --install-lib=${graphite::config::libdir}",
-    creates   => "${graphite::config::basedir}/bin/carbon-cache.py",
-    require   => Repository["${boxen::config::cachedir}/carbon"],
+    creates   => "${graphite::config::bindir}/carbon-cache.py",
+    require   => [
+      Repository["${boxen::config::cachedir}/carbon"],
+      File[$graphite::config::bindir],
+      File[$graphite::config::libdir],
+    ],
   }
 
   file { "${graphite::config::confdir}/storage-schemas.conf":

@@ -1,4 +1,6 @@
 class graphite {
+
+  include boxen::config
   include graphite::carbon
   include graphite::whisper
 
@@ -10,6 +12,13 @@ class graphite {
     $graphite::config::bindir,
   ]:
     ensure  => directory,
+  }
+
+  # Link normal boxen config to graphites config location
+  file { "${boxen::config::configdir}/graphite":
+    ensure  => link,
+    target  => $graphite::config::confdir,
+    require => File[$boxen::config::configdir],
   }
 
 }

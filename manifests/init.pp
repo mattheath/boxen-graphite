@@ -10,6 +10,7 @@ class graphite {
     $graphite::config::libdir,
     $graphite::config::confdir,
     $graphite::config::bindir,
+    $graphite::config::logdir,
   ]:
     ensure  => directory,
   }

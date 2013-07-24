@@ -32,4 +32,14 @@ class graphite::web {
     ],
   }
 
+  # Install mod_wsgi
+
+  homebrew::formula { 'mod_wsgi':
+    source => 'puppet:///modules/graphite/brews/mod_wsgi.rb',
+  }
+
+  package { 'boxen/brews/mod_wsgi':
+    ensure => '3.4',
+  }
+
 }

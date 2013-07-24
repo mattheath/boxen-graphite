@@ -11,6 +11,7 @@ class graphite {
     $graphite::config::confdir,
     $graphite::config::bindir,
     $graphite::config::logdir,
+    $graphite::config::webdir,
   ]:
     ensure  => directory,
   }

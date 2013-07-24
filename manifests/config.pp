@@ -6,9 +6,11 @@ class graphite::config {
 
   $builddir = $boxen::config::cachedir
   $basedir  = "${boxen::config::home}/graphite"
-  $libdir   = "${basedir}/lib"
-  $confdir  = "${basedir}/conf"
   $bindir   = "${basedir}/bin"
+  $confdir  = "${basedir}/conf"
+  $libdir   = "${basedir}/lib"
   $logdir   = "${boxen::config::logdir}/graphite"
+  $webdir   = "${basedir}/webapp"
+
 
 }

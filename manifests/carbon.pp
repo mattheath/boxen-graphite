@@ -49,6 +49,7 @@ class graphite::carbon {
     cwd     => "${boxen::config::cachedir}/twisted",
     unless  => "git describe --tags --exact-match `git rev-parse HEAD` | grep ${twisted_tag}",
     require => Repository["${boxen::config::cachedir}/twisted"],
+    notify  => Exec['install-twisted'],
   }
 
   exec { 'install-twisted':
@@ -56,7 +57,6 @@ class graphite::carbon {
     creates   => "${homebrew::config::installdir}/lib/python2.7/site-packages/Twisted-${twisted_version}-py2.7-macosx-10.8-x86_64.egg",
     require   => [
       Class['python'],
-      Exec["ensure-twisted-version-${twisted_version}"],
       File[$graphite::config::bindir],
       File[$graphite::config::libdir],
     ],

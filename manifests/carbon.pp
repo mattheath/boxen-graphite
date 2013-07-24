@@ -4,6 +4,7 @@ class graphite::carbon {
   include boxen::config
   include graphite::config
   include graphite::config::carbon
+  include homebrew::config
 
   # Install Carbon
 
@@ -23,19 +24,29 @@ class graphite::carbon {
     ],
   }
 
-  # Install Twisted
+  # Install Twisted, yeah sorry this is global
+
+  $twisted_version = '13.1.0'
+  $twisted_tag     = "twisted-${twisted_version}"
 
   repository { "${boxen::config::cachedir}/twisted":
     source   => 'twisted/twisted',
     provider => 'git'
   }
 
+  exec { "ensure-twisted-version-${twisted_version}":
+    command => "git fetch && git reset --hard ${twisted_tag}",
+    cwd     => "${boxen::config::cachedir}/twisted",
+    unless  => "git describe --tags --exact-match `git rev-parse HEAD` | grep ${twisted_tag}",
+    require => Repository["${boxen::config::cachedir}/twisted"],
+  }
+
   exec { 'install-twisted':
     command   => "cd ${graphite::config::builddir}/twisted && python setup.py install",
-    #creates   => "${graphite::config::bindir}/carbon-cache.py",
+    creates   => "${homebrew::config::installdir}/lib/python2.7/site-packages/Twisted-${twisted_version}-py2.7-macosx-10.8-x86_64.egg",
     require   => [
       Class['python'],
-      Repository["${boxen::config::cachedir}/twisted"],
+      Exec["ensure-twisted-version-${twisted_version}"],
       File[$graphite::config::bindir],
       File[$graphite::config::libdir],
     ],

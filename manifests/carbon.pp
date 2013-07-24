@@ -62,4 +62,21 @@ class graphite::carbon {
     content => template('graphite/carbon.conf.erb')
   }
 
+
+  file { '/Library/LaunchDaemons/dev.carbon.plist':
+    content => template('graphite/dev.carbon.plist.erb'),
+    group   => 'wheel',
+    owner   => 'root',
+    require => [
+      Exec['install-carbon'],
+      Exec['install-twisted'],
+    ],
+    notify  => Service['dev.carbon'],
+  }
+
+  service { 'dev.carbon':
+    ensure  => running,
+  }
+
+
 }

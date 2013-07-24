@@ -22,6 +22,7 @@ class graphite::carbon {
       File[$graphite::config::bindir],
       File[$graphite::config::libdir],
     ],
+    notify    => Service['dev.carbon'],
   }
 
   # Install Twisted, yeah sorry this is global
@@ -50,16 +51,19 @@ class graphite::carbon {
       File[$graphite::config::bindir],
       File[$graphite::config::libdir],
     ],
+    notify    => Service['dev.carbon'],
   }
 
   # Set up config
 
   file { "${graphite::config::confdir}/storage-schemas.conf":
-    content => template('graphite/storage-schemas.conf.erb')
+    content => template('graphite/storage-schemas.conf.erb'),
+    notify  => Service['dev.carbon'],
   }
 
   file { "${graphite::config::confdir}/carbon.conf":
-    content => template('graphite/carbon.conf.erb')
+    content => template('graphite/carbon.conf.erb'),
+    notify  => Service['dev.carbon'],
   }
 
 

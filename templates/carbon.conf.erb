@@ -50,7 +50,7 @@ MAX_UPDATES_PER_SECOND = 500
 # If defined, this changes the MAX_UPDATES_PER_SECOND in Carbon when a
 # stop/shutdown is initiated.  This helps when MAX_UPDATES_PER_SECOND is
 # relatively low and carbon has cached a lot of updates; it enables the carbon
-# daemon to shutdown more quickly. 
+# daemon to shutdown more quickly.
 # MAX_UPDATES_PER_SECOND_ON_SHUTDOWN = 1000
 
 # Softly limits the number of whisper files that get created each minute.
@@ -63,17 +63,17 @@ MAX_UPDATES_PER_SECOND = 500
 MAX_CREATES_PER_MINUTE = 50
 
 LINE_RECEIVER_INTERFACE = 0.0.0.0
-LINE_RECEIVER_PORT = 2003
+LINE_RECEIVER_PORT = <%= scope.lookupvar "graphite::config::carbon::line_receiver_port" %>
 
 # Set this to True to enable the UDP listener. By default this is off
 # because it is very common to run multiple carbon daemons and managing
 # another (rarely used) port for every carbon instance is not fun.
 ENABLE_UDP_LISTENER = False
 UDP_RECEIVER_INTERFACE = 0.0.0.0
-UDP_RECEIVER_PORT = 2003
+UDP_RECEIVER_PORT = <%= scope.lookupvar "graphite::config::carbon::udp_receiver_port" %>
 
 PICKLE_RECEIVER_INTERFACE = 0.0.0.0
-PICKLE_RECEIVER_PORT = 2004
+PICKLE_RECEIVER_PORT = <%= scope.lookupvar "graphite::config::carbon::pickle_receiver_port" %>
 
 # Per security concerns outlined in Bug #817247 the pickle receiver
 # will use a more secure and slightly less efficient unpickler.
@@ -81,7 +81,7 @@ PICKLE_RECEIVER_PORT = 2004
 USE_INSECURE_UNPICKLER = False
 
 CACHE_QUERY_INTERFACE = 0.0.0.0
-CACHE_QUERY_PORT = 7002
+CACHE_QUERY_PORT = <%= scope.lookupvar "graphite::config::carbon::cache_query_port" %>
 
 # Set this to False to drop datapoints received after the cache
 # reaches MAX_CACHE_SIZE. If this is True (the default) then sockets
@@ -260,7 +260,7 @@ PICKLE_RECEIVER_PORT = 2024
 # use multiple carbon-cache instances then it would look like this:
 #
 # DESTINATIONS = 127.0.0.1:2004:a, 127.0.0.1:2104:b
-# 
+#
 # The format is comma-delimited IP:PORT:INSTANCE where the :INSTANCE part is
 # optional and refers to the "None" instance if omitted.
 #

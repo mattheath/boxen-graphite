@@ -3,6 +3,7 @@ class graphite::carbon {
   include python
   include boxen::config
   include graphite::config
+  include graphite::config::carbon
 
   # Install Carbon
 

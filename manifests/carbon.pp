@@ -22,6 +22,26 @@ class graphite::carbon {
     ],
   }
 
+  # Install Twisted
+
+  repository { "${boxen::config::cachedir}/twisted":
+    source   => 'twisted/twisted',
+    provider => 'git'
+  }
+
+  exec { 'install-twisted':
+    command   => "cd ${graphite::config::builddir}/twisted && python setup.py install",
+    #creates   => "${graphite::config::bindir}/carbon-cache.py",
+    require   => [
+      Class['python'],
+      Repository["${boxen::config::cachedir}/twisted"],
+      File[$graphite::config::bindir],
+      File[$graphite::config::libdir],
+    ],
+  }
+
+  # Set up config
+
   file { "${graphite::config::confdir}/storage-schemas.conf":
     content => template('graphite/storage-schemas.conf.erb')
   }

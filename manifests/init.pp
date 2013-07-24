@@ -3,6 +3,7 @@ class graphite {
   include boxen::config
   include graphite::carbon
   include graphite::whisper
+  include graphite::web
 
   # Create directory structure
   file { [

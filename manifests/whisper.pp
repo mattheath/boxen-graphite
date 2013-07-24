@@ -28,6 +28,7 @@ class graphite::whisper {
       File[$graphite::config::bindir],
       File[$graphite::config::libdir],
     ],
+    notify  => Service['dev.carbon'],
   }
 
   # Link the whisper library to the same directory as the scripts

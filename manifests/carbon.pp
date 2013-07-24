@@ -26,7 +26,7 @@ class graphite::carbon {
 
   # Install Twisted, yeah sorry this is global
 
-  $twisted_version = '13.1.0'
+  $twisted_version = '11.1.0'
   $twisted_tag     = "twisted-${twisted_version}"
 
   repository { "${boxen::config::cachedir}/twisted":

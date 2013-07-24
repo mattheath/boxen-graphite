@@ -8,9 +8,19 @@ class graphite::carbon {
 
   # Install Carbon
 
+  $carbon_version = '0.9.11-pre1'
+
   repository { "${boxen::config::cachedir}/carbon":
     source    => 'graphite-project/carbon',
     provider  => 'git'
+  }
+
+  exec { "ensure-carbon-version-${carbon_version}":
+    command => "git fetch && git reset --hard ${carbon_version}",
+    cwd     => "${boxen::config::cachedir}/carbon",
+    unless  => "git describe --tags --exact-match `git rev-parse HEAD` | grep ${carbon_version}",
+    require => Repository["${boxen::config::cachedir}/carbon"],
+    notify  => Exec['install-carbon'],
   }
 
   exec { 'install-carbon':
@@ -18,7 +28,6 @@ class graphite::carbon {
     creates   => "${graphite::config::bindir}/carbon-cache.py",
     require   => [
       Class['python'],
-      Repository["${boxen::config::cachedir}/carbon"],
       File[$graphite::config::bindir],
       File[$graphite::config::libdir],
     ],

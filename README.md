@@ -1,5 +1,10 @@
 # puppet-graphite
 
+### MOVED TO [hailocab/boxen-graphite](https://github.com/hailocab/boxen-graphite)
+
+------
+
+
 Puppet module for setting up Graphite, because it's no walk in the park manually. Built with
 [Boxen](https://github.com/boxen/boxen) in mind.
 

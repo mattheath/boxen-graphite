@@ -26,7 +26,7 @@ class graphite::web {
   }
 
   exec { 'install-graphite-web':
-    command   => "cd ${graphite::config::builddir}/graphite-web && python setup.py install --prefix=${graphite::config::basedir} --install-lib=${graphite::config::webdir} --install-scripts=${graphite::config::bindir}",
+    command   => "cd ${graphite::config::builddir}/graphite-web && /opt/boxen/homebrew/bin/python setup.py install --prefix=${graphite::config::basedir} --install-lib=${graphite::config::webdir} --install-scripts=${graphite::config::bindir}",
     creates   => "${graphite::config::webdir}/graphite/manage.py",
     require   => [
       Class['python'],
@@ -70,7 +70,7 @@ class graphite::web {
   }
 
   exec { 'install-django-tagging':
-    command   => "cd ${boxen::config::cachedir}/django-tagging-0.3.1 && python setup.py install",
+    command   => "cd ${boxen::config::cachedir}/django-tagging-0.3.1 && /opt/boxen/homebrew/bin/python setup.py install",
     creates   => "${homebrew::config::installdir}/lib/python2.7/site-packages/django_tagging-0.3.1-py2.7.egg-info",
     require   => [
       Class['python'],
@@ -93,7 +93,7 @@ class graphite::web {
 
   exec { 'install-graphite-database':
     provider => shell,
-    command  => 'export LANG=es_ES.UTF-8 && export LC_ALL=es_ES.UTF-8 && python manage.py syncdb --noinput',
+    command  => 'export LANG=es_ES.UTF-8 && export LC_ALL=es_ES.UTF-8 && /opt/boxen/homebrew/bin/python manage.py syncdb --noinput',
     cwd      => "${graphite::config::webdir}/graphite/",
     unless   => "[ -f ${graphite::config::basedir}/storage/graphite.db ] && sqlite3 ${graphite::config::basedir}/storage/graphite.db \"SELECT name FROM sqlite_master WHERE name='auth_user'\" | grep 'auth_user'",
     require  => [

@@ -24,7 +24,7 @@ class graphite::carbon {
   }
 
   exec { 'install-carbon':
-    command   => "cd ${graphite::config::builddir}/carbon && python setup.py install --prefix=${graphite::config::basedir} --install-lib=${graphite::config::libdir} --install-scripts=${graphite::config::bindir}",
+    command   => "cd ${graphite::config::builddir}/carbon && /opt/boxen/homebrew/bin/python setup.py install --prefix=${graphite::config::basedir} --install-lib=${graphite::config::libdir} --install-scripts=${graphite::config::bindir}",
     creates   => "${graphite::config::bindir}/carbon-cache.py",
     require   => [
       Class['python'],
@@ -53,7 +53,7 @@ class graphite::carbon {
   }
 
   exec { 'install-twisted':
-    command   => "cd ${graphite::config::builddir}/twisted && python setup.py install",
+    command   => "cd ${graphite::config::builddir}/twisted && /opt/boxen/homebrew/bin/python setup.py install",
     creates   => "${homebrew::config::installdir}/lib/python2.7/site-packages/Twisted-${twisted_version}-py2.7-macosx-10.8-x86_64.egg",
     require   => [
       Class['python'],

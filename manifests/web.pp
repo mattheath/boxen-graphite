@@ -85,11 +85,18 @@ class graphite::web {
 
   # Setup database
 
+  file { "${graphite::config::webdir}/graphite/initial_data.json":
+    content => template('graphite/db-dump.json.erb'),
+    require => Exec['install-graphite-web'],
+  }
+
   exec { 'install-graphite-database':
-    command => 'python manage.py syncdb',
-    cwd     => "${graphite::config::webdir}/graphite/",
-    require => [
-      Exec['install-graphite-web'],
+    provider => shell,
+    command  => 'export LANG=es_ES.UTF-8 && export LC_ALL=es_ES.UTF-8 && python manage.py syncdb --noinput',
+    cwd      => "${graphite::config::webdir}/graphite/",
+    unless   => "[ -f ${graphite::config::basedir}/storage/graphite.db ] && sqlite3 ${graphite::config::basedir}/storage/graphite.db \"SELECT name FROM sqlite_master WHERE name='auth_user'\" | grep 'auth_user'",
+    require  => [
+      File["${graphite::config::webdir}/graphite/initial_data.json"],
       Exec['install-django'],
       Exec['install-django-tagging'],
     ]

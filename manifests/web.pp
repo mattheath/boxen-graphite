@@ -5,6 +5,7 @@ class graphite::web {
   include apache::mod_wsgi
   include cairo
   include cairo::pycairo
+  include homebrew
 
   # Install Graphite Web
 
@@ -54,6 +55,26 @@ class graphite::web {
     command   => "cd ${graphite::config::builddir}/django && python setup.py install",
     creates   => "/opt/boxen/homebrew/share/python/django-admin.py",
     require   => Class['python']
+  }
+
+  # Install django-tagging
+
+  $django_tagging_file_name = 'django-tagging-0.3.1.tar.gz'
+  $django_tagging_source    = "https://django-tagging.googlecode.com/files/${django_tagging_file_name}"
+
+  exec { 'cache-django-tagging':
+    command => "curl -k -O ${django_tagging_source} && tar -xzf ${django_tagging_file_name}",
+    cwd     => $boxen::config::cachedir,
+    creates => "${boxen::config::cachedir}/django-tagging-0.3.1",
+  }
+
+  exec { 'install-django-tagging':
+    command   => "cd ${boxen::config::cachedir}/django-tagging-0.3.1 && python setup.py install",
+    creates   => "${homebrew::config::installdir}/lib/python2.7/site-packages/django_tagging-0.3.1-py2.7.egg-info",
+    require   => [
+      Class['python'],
+      Exec['cache-django-tagging'],
+    ]
   }
 
   # Add a local settings file to remove some log errors

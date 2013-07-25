@@ -69,7 +69,7 @@ class graphite::web {
 
   exec { 'install-django':
     command   => "cd ${graphite::config::builddir}/django && python setup.py install",
-    #creates   => "${graphite::config::bindir}/carbon-cache.py",
+    creates   => "/opt/boxen/homebrew/share/python/django-admin.py",
     require   => [
       Class['python'],
       File[$graphite::config::bindir],

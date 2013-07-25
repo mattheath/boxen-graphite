@@ -11,8 +11,8 @@ WSGISocketPrefix /opt/boxen/graphite
 <VirtualHost *:10080>
     ServerName graphite.dev
     DocumentRoot "/opt/boxen/graphite/webapp"
-    ErrorLog /opt/boxen/graphite/storage/log/webapp/error.log
-    CustomLog /opt/boxen/graphite/storage/log/webapp/access.log common
+    ErrorLog /opt/boxen/log/apache/graphite-error.log
+    CustomLog /opt/boxen/log/apache/graphite-access.log common
 
     # I've found that an equal number of processes & threads tends
     # to show the best performance for Graphite (ymmv).

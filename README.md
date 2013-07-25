@@ -14,9 +14,11 @@ This will add carbon, whisper, and graphite-web.  If you prefer, each is configu
 ## Required Puppet Modules
 
 * `boxen`
-* `puppet-python`
+* `homebrew`
+* `python` (depends on `xquartz`)
+* `cairo` (depends on `xz`, `pixman`, `libpng`, `pkgconfig`)
 
 ## Development
 
-Write code. Run `script/cibuild` to test it. Check the `script` directory for 
+Write code. Run `script/cibuild` to test it. Check the `script` directory for
 other useful tools.

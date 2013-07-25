@@ -83,4 +83,16 @@ class graphite::web {
     source => 'puppet:///modules/graphite/local_settings.py',
   }
 
+  # Setup database
+
+  exec { 'install-graphite-database':
+    command => 'python manage.py syncdb',
+    cwd     => "${graphite::config::webdir}/graphite/",
+    require => [
+      Exec['install-graphite-web'],
+      Exec['install-django'],
+      Exec['install-django-tagging'],
+    ]
+  }
+
 }

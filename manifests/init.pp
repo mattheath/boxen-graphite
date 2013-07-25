@@ -2,6 +2,7 @@ class graphite {
 
   include boxen::config
   include graphite::carbon
+  include graphite::config::carbon
   include graphite::whisper
   include graphite::web
 

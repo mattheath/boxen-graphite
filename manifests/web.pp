@@ -3,6 +3,7 @@ class graphite::web {
 
   include apache
   include apache::mod_wsgi
+  include nginx
   include cairo
   include cairo::pycairo
   include homebrew
@@ -116,6 +117,13 @@ class graphite::web {
     owner   => 'root',
     group   => 'wheel',
     notify  => Service['org.apache.httpd'],
+  }
+
+  # Nginx proxy
+
+  file { "${nginx::config::sitesdir}/graphite.conf":
+    content => template('graphite/nginx.conf.erb'),
+    notify  => Service['dev.nginx'],
   }
 
 }

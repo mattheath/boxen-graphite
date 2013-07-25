@@ -33,6 +33,7 @@ class graphite::web {
       File[$graphite::config::bindir],
       File[$graphite::config::libdir],
     ],
+    notify    => Service['org.apache.httpd'],
   }
 
   # A sprinkling of Django
@@ -55,7 +56,8 @@ class graphite::web {
   exec { 'install-django':
     command   => "cd ${graphite::config::builddir}/django && python setup.py install",
     creates   => "/opt/boxen/homebrew/share/python/django-admin.py",
-    require   => Class['python']
+    require   => Class['python'],
+    notify    => Service['org.apache.httpd'],
   }
 
   # Install django-tagging
@@ -75,7 +77,8 @@ class graphite::web {
     require   => [
       Class['python'],
       Exec['cache-django-tagging'],
-    ]
+    ],
+    notify    => Service['org.apache.httpd'],
   }
 
   # Add a local settings file to remove some log errors
@@ -110,6 +113,7 @@ class graphite::web {
   file { "${graphite::config::confdir}/graphite.wsgi":
     content => template('graphite/graphite.wsgi.erb'),
     require => Exec['install-graphite-web'],
+    notify  => Service['org.apache.httpd'],
   }
 
   # Apache VHost

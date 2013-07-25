@@ -2,6 +2,7 @@
 class graphite::web {
 
   include apache
+  include apache::mod_wsgi
   include cairo
   include cairo::pycairo
 
@@ -30,24 +31,6 @@ class graphite::web {
       File[$graphite::config::bindir],
       File[$graphite::config::libdir],
     ],
-  }
-
-  # Install mod_wsgi
-
-  # First fix a missing link which breaks compilation
-  # See here for more info: https://github.com/Homebrew/homebrew-apache#troubleshooting
-  file { "/Applications/Xcode.app/Contents/Developer/Toolchains/OSX10.8.xctoolchain":
-    ensure => link,
-    target => "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain",
-    before => Homebrew::Formula['mod_wsgi'],
-  }
-
-  homebrew::formula { 'mod_wsgi':
-    source => 'puppet:///modules/graphite/brews/mod_wsgi.rb',
-  }
-
-  package { 'boxen/brews/mod_wsgi':
-    ensure => '3.4',
   }
 
   # A sprinkling of Django

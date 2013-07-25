@@ -25,7 +25,7 @@ class graphite::web {
 
   exec { 'install-graphite-web':
     command   => "cd ${graphite::config::builddir}/graphite-web && python setup.py install --prefix=${graphite::config::basedir} --install-lib=${graphite::config::webdir} --install-scripts=${graphite::config::bindir}",
-    #creates   => "${graphite::config::bindir}/carbon-cache.py",
+    creates   => "${graphite::config::webdir}/graphite/manage.py",
     require   => [
       Class['python'],
       File[$graphite::config::bindir],

@@ -109,4 +109,13 @@ class graphite::web {
     require => Exec['install-graphite-web'],
   }
 
+  # Apache VHost
+
+  file { "${apache::config::sitesdir}/graphite.conf":
+    content => template('graphite/apache-vhost.conf.erb'),
+    owner   => 'root',
+    group   => 'wheel',
+    notify  => Service['org.apache.httpd'],
+  }
+
 }

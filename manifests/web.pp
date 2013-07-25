@@ -60,4 +60,10 @@ class graphite::web {
     ],
   }
 
+  # Add a local settings file to remove some log errors
+
+  file { "${graphite::config::webdir}/graphite/local_settings.py":
+    source => 'puppet:///modules/graphite/local_settings.py',
+  }
+
 }

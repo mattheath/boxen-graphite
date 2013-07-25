@@ -102,4 +102,11 @@ class graphite::web {
     ]
   }
 
+  # graphite.wsgi
+
+  file { "${graphite::config::confdir}/graphite.wsgi":
+    content => template('graphite/graphite.wsgi'),
+    require => Exec['install-graphite-web'],
+  }
+
 }

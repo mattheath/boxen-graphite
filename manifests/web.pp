@@ -53,11 +53,7 @@ class graphite::web {
   exec { 'install-django':
     command   => "cd ${graphite::config::builddir}/django && python setup.py install",
     creates   => "/opt/boxen/homebrew/share/python/django-admin.py",
-    require   => [
-      Class['python'],
-      File[$graphite::config::bindir],
-      File[$graphite::config::libdir],
-    ],
+    require   => Class['python']
   }
 
   # Add a local settings file to remove some log errors

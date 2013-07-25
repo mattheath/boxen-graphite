@@ -54,7 +54,7 @@ class graphite::carbon {
 
   exec { 'install-twisted':
     command   => "cd ${graphite::config::builddir}/twisted && /opt/boxen/homebrew/bin/python setup.py install",
-    creates   => "${homebrew::config::installdir}/lib/python2.7/site-packages/Twisted-${twisted_version}-py2.7-macosx-10.8-x86_64.egg",
+    creates   => "${homebrew::config::installdir}/lib/python2.7/site-packages/Twisted-11.1.0-py2.7-macosx-10.8-intel.egg",
     require   => [
       Class['python'],
       File[$graphite::config::bindir],

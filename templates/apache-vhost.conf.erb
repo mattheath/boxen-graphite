@@ -16,7 +16,7 @@ WSGISocketPrefix /opt/boxen/graphite
 
     # I've found that an equal number of processes & threads tends
     # to show the best performance for Graphite (ymmv).
-    WSGIDaemonProcess graphite processes=5 threads=5 display-name='%{GROUP}' inactivity-timeout=120 python-path=/opt/boxen/homebrew/lib/python2.7/site-packages:/opt/boxen/graphite/webapp:/opt/boxen/graphite/lib:/opt/boxen/homebrew/Cellar/py2cairo/1.10.0-boxen1/lib/python2.7/site-packages/cairo
+    WSGIDaemonProcess graphite processes=5 threads=5 display-name='%{GROUP}' inactivity-timeout=120 python-path=/opt/boxen/homebrew/lib/python2.7/site-packages:/opt/boxen/graphite/webapp:/opt/boxen/graphite/lib
     WSGIProcessGroup graphite
     WSGIApplicationGroup %{GLOBAL}
     WSGIImportScript /opt/boxen/graphite/conf/graphite.wsgi process-group=graphite application-group=%{GLOBAL}

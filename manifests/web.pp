@@ -83,6 +83,7 @@ class graphite::web {
   file { "${graphite::config::webdir}/graphite/local_settings.py":
     source  => 'puppet:///modules/graphite/local_settings.py',
     require => Exec['install-graphite-web'],
+    notify  => Service['org.apache.httpd'],
   }
 
   # Setup database
